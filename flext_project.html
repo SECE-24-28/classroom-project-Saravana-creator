@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .outer{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 30px;
+            padding: 5vw;
+            background-color: antiquewhite;
+            flex-wrap: wrap;
+        }
+
+        .inner img{
+            width: 45vw;     /* Responsive width */
+            max-width: 400px; /* Won't grow too big */
+            height: auto;     /* Prevents cutting */
+            border-radius: 5px;
+        }
+
+        .text{
+            max-width: 400px;
+            font-size: 20px;
+        }
+
+        /* Responsive breakpoint for small screens */
+        @media (max-width: 600px) {
+            .outer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .inner img {
+                width: 80vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outer">
+        
+        <div class="inner">
+            <img src="Hubble_pic.jpg" alt="Hubble">
+        </div>
+
+        <div class="text">
+            <p>This is a picture taken by the Hubble telescope.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        html{
+            scroll-behavior: smooth;
+        }
+
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+
+        nav{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background-color: black;
+            width: 100vw;
+        }
+
+        a{
+            color: white;
+            text-decoration: none;
+            padding: 0px;
+            font-size: 1.2rem;
+        }
+
+        #home{
+            background-color: lightblue;
+            height: 80vh;
+        }
+
+        #about{
+            background-color: aliceblue;
+            height: 80vh;
+            text-align: center;
+        }
+
+        #contact{
+            background-color: aquamarine;
+            height: 80vh;
+        }
+
+        button{
+            background-color: brown;
+            color: black;
+
+        }
+        .outer{
+            position: relative;
+        }
+
+        .aizen{
+            width: 50%;
+        }
+        .overlay{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#home" >Home</a>
+        <a href="#about" >About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="outer">
+        <video src="aizen_vid.mp4" autoplay muted loop class="aizen"></video>
+        <div class="overlay">Aizen sosuke</div>
+    </div>
+    <div id="home">
+       <label for="hm" style="background-color : black; color: aliceblue;">Home</label> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia minima cumque possimus, officia accusamus optio obcaecati iste repudiandae modi nulla, suscipit velit necessitatibus quidem officiis. At esse consectetur commodi hic.</p>
+    </div>
+    <div id="about">
+        <p>Hi this is me</p>
+    </div>
+    <div id="contact">
+        <p>@google.com</p>
+    </div>
+</body>
+</html>
