@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav{
+            display: flex;
+            flex-wrap: wrap;           /* <--- FIXED */
+            justify-content: space-between;
+            align-items: center;
+            background-color: black;
+            padding: 12px 20px;
+        }
+
+        ol{
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;            /* <--- allows menu items themselves to wrap */
+            gap: 20px;
+            align-items: center;
+        }
+
+        h2, li{
+            color: antiquewhite;
+            font-size: 1.2rem;
+        }
+
+        li:hover{
+            color: #89cff0;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        /* Optional: If screen is small, center everything */
+        @media (max-width: 600px){
+            nav{
+                justify-content: center;
+            }
+            ol{
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h2>PORTFOLIO</h2>
+        <ol>
+            <li>Home</li>
+            <li>About me</li>
+            <li>Contact</li>
+        </ol>
+    </nav>
+    <div class="outer"></div>
+        <img src="saravana.png" alt="saravana" style="height: 50vh;">
+        <p>Hello my name is Saravana Perumal M</p>
+    </div>
+</body>
+</html>
+ 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+            let previous="";
+            function change(){
+                let img=document.getElementById("link");
+                previous=img.src;
+                img.src="Untitled.jpeg";
+                
+            }
+            function prev(){
+                let img=document.getElementById("link");
+                if(previous!==""){
+                    img.src=previous;
+                }
+                else{
+                    alert("Please enter extra image");
+                }
+            }
+    </script>
+</head>
+<body>
+    <img src="linked_in.png" alt="linkedin" id="link">
+    <div class="flex flex wrap p-4 ml-4">
+         <button onclick="change()">Change</button>
+         <button onclick="prev()">Previous</button>
+    </div>
+   
+</body>
+</html>
