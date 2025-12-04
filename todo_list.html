@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="bg-gray">
+    <div class="bg-white rounded">
+        <input type="text" id="course">
+        <button id="bt">Add</button>
+        <button id="del">Delete</button>
+        <button id="update">Update</button>
+        <ol id="list"></ol>
+    </div>
+    </div>
+    
+    
+    <script>
+        let tex=document.getElementById("course");
+        let btn=document.getElementById("bt");
+        let list_item=document.getElementById("list");
+        let dlt=document.getElementById("del");
+        let up=document.getElementById("update");
+        btn.addEventListener("click",()=>{
+            if(tex.value!==""){
+                let li=document.createElement("li");
+                li.textContent=tex.value;
+                list_item.appendChild(li);
+            }
+        })
+        
+        dlt.addEventListener("click",()=>{
+            if(list_item.children.length>0){
+                list_item.removeChild(list_item.children[0]);
+            }
+        })
+
+        
+    </script>
+</body>
+</html>

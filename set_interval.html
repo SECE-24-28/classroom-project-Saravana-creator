@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div><h1>Digital Clock</h1>
+    </div>
+
+    <span id="hr">00:</span>
+    <span id="min">00:</span>
+    <span id="sec">00:</span>
+    <button onclick="change()">Change</button>
+    <h1>Dark and light mode</h1>
+    <script>
+        // let i=1;
+        // function demo(){
+        //     console.log(i);
+        //     i++;
+        // }
+        // setInterval(demo,1000);
+        // let h=0;
+        // let m=0;
+        // let s=0;
+        
+        let isDark=false;
+        function change(){
+            let body=document.body;
+            if(isDark==false){
+                body.style.backgroundColor="black";
+                body.style.color="white";
+                isDark=true;
+            }
+            else{
+                body.style.backgroundColor="white";
+                body.style.color="black";
+                isDark=false;
+            }
+        }
+
+        function clock(){
+
+        //    
+        
+        // s++;
+
+        //     if (s === 60) {
+        //         s = 0;
+        //         m++;
+        //     }
+
+        //     if (m === 60) {
+        //         m = 0;
+        //         h++;
+        //     }
+
+        //     if (h === 24) {
+        //         h = 0;
+        //     }
+
+        let now = new Date();
+
+            let h = now.getHours();
+            let m = now.getMinutes();
+            let s = now.getSeconds();
+
+
+        let hh=(h<0)?"0"+h:h;
+        let mm=(m<0)?"0"+m:m;
+        let ss=(s<0)?"0"+s:s;
+
+        document.getElementById("hr").textContent=hh;
+        document.getElementById("min").textContent=mm;
+        document.getElementById("sec").textContent=ss;
+
+        }
+    setInterval(clock,1000);
+    
+    clock();
+    </script>
+</body>
+</html>
