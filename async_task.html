@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Posts</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #1e40af;
+        }
+
+        ol {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .error {
+            color: red;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btn">Get Posts</button>
+    <ol id="list"></ol>
+
+    <script>
+        let bt = document.getElementById("btn");
+        let list_item = document.getElementById("list");
+
+        bt.addEventListener("click", async () => {
+            try {
+                list_item.innerHTML = ""; // clears old data
+
+                let res = await fetch("https://jsonplaceholder.typicode.com/posts");
+                let data = await res.json();
+
+                data.forEach(posts => {
+                    let l = document.createElement("li");
+                    l.textContent = posts.title;
+                    list_item.appendChild(l);
+                });
+
+            } catch (error) {
+                let err = document.createElement("h1");
+                err.textContent = "There is an error while fetching data";
+                err.className = "error";
+                document.body.appendChild(err);
+            }
+        });
+    </script>
+
+</body>
+</html>
