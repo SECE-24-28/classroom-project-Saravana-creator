@@ -1,72 +1,36 @@
-import { useState } from 'react'
 import './App.css'
-import Header from './Header';
-import Body from './Body';
-import Footer from './Footer';
-import Add from './Add';
-import Search from './Search'
-import One from './One';
-import Two from './Two';
-import { DataProvider } from '.context/DataContext';
+import { Route, Routes, Link } from 'react-router-dom'
+import Home from './Home.jsx'
+import About from './About.jsx'
+import Gallery from './Gallery.jsx'
+import PostPage from './PostPage.jsx'
+import Post from './Post.jsx'
+import NewPost from './NewPost.jsx'
 
 function App() {
-  
-  const [list,setlist]=useState([
-        {id:1,name:"sara",fee:true},
-        {id:2,name:"peru",fee:false},
-        {id:3,name:"msp",fee:true}
-      ]);
-
-  const [name,setName]=useState("");
-  const [search,setSearch]=useState("");
-
-  const handleDelete=(id)=>{
-    const newList=list.filter((ls)=>ls.id!==id);
-    setlist(newList);
-  }
-
-  const handleCheck=(id)=>{
-    const newList=list.map((ls)=>(ls.id===id)?({...ls,fee:!ls.fee}):(ls));
-    setlist(newList);
-  }
-
-  const handleAdd=()=>{
-    if(!name.trim()) return;
-    let newItem={id:list.length+1, name:name, fee:false};
-    setlist([...list, newItem]);//...list means creating a duplicate instead of doing it in the previous list.
-    setName("");
-  }
-
-  const filtered=list.filter((ls)=>ls.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <>
-       {/* <h2>Student List</h2> */}
-       <Header title={"Student List"} dep={"CSE"}/>
-       {/* <hr /> */}
-       {/* <ul> */}
-        {/* {
-          list.map((ls)=>
-            <li key={ls.id}>
-              <input type="checkbox" checked={ls.fee} onChange={()=>handleCheck(ls.id)}/>
-              <label>ls.name</label>
-              <button onClick={()=>handleDelete(ls.id)}>Delete</button>
-            </li>
-            
-          )
-        } */}
-        <Body list={filtered} handleCheck={handleCheck} handleDelete={handleDelete} />
 
-       {/* </ul> */}
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/gallery">Gallery</Link></li>
+        <li><Link to="/postpage">PostPage</Link></li>
+      </ul>
 
-       <Footer len={list.length} />
-       <Add name={name} setName={setName} handleAdd={handleAdd} />
-       <Search search={search} setSearch={setSearch} />
+      <Routes>
+        
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/gallery" element={<Gallery />} />
 
-       <DataProvider>
-        <One />
-        <Two />
-       </DataProvider>
+        <Route path="/postpage" element={<PostPage />} >
+            <Route path=":id" element={<Post />} />
+            <Route path="newpost" element={<NewPost />} />
+        </Route>
+
+      </Routes>
 
     </>
   )
