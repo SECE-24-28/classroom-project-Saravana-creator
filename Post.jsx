@@ -1,12 +1,7 @@
-import React from 'react'
-import {useParams} from 'react-router-dom'
-const Post = () => {
-    const {id}=useParams();
-  return (
-    <div>
-      Post -{id}
-    </div>
-  )
-}
+import axios from "axios"
 
-export default Post
+const api=axios.create({
+    baseURL:"http://localhost:3500"
+})
+
+export default api
