@@ -1,37 +1,91 @@
+import { useState, useEffect } from 'react'
 import './App.css'
-import { Route, Routes, Link } from 'react-router-dom'
+import api from './api/Post.jsx'
 import Home from './Home.jsx'
-import About from './About.jsx'
-import Gallery from './Gallery.jsx'
-import PostPage from './PostPage.jsx'
-import Post from './Post.jsx'
-import NewPost from './NewPost.jsx'
+import Search from './Search.jsx'
+import AddPost from './AddPost.jsx'
+import { DataProvider } from './DataContext.jsx'
 
 function App() {
+  
+  const [posts, setPosts] = useState([])
+  const [search, setSearch] = useState("")
+  const [searchResults, setSearchResults] = useState([])
+  const [title,setTitle]=useState('')
+  const [body,setBody]=useState('')
 
+  useEffect(()=>{
+    const fetchPosts=async()=>{
+      try{
+        const res= await api.get("/feedback");
+        console.log(res.data);
+        setPosts(res.data);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    fetchPosts();
+  },[])
+  
+  useEffect(() => {
+  const demo = () => {
+    const filtered = posts.filter(post =>
+      post.title?.toLowerCase().includes(search.toLowerCase())
+    )
+    setSearchResults(filtered)
+  }
+
+  demo()  
+}, [posts, search])
+
+    
+    
+
+  const handleSubmit=async(e)=>{
+      e.preventDefault();
+      const id=(posts.length)?(Number(posts[posts.length-1].id)+1):(1)
+      const datetime=new Date().toLocaleString()
+
+      const newObj={id,title,datetime,body}
+      try{
+        await api.post("/feedback",newObj)
+        const newList=[...posts,newObj]
+        setPosts(newList)
+        setTitle('')
+        setBody('')
+      }
+      catch(err){
+        console.log(err)
+      }
+  }
   return (
     <>
-
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/gallery">Gallery</Link></li>
-        <li><Link to="/postpage">PostPage</Link></li>
-      </ul>
-
-      <Routes>
-        
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/gallery" element={<Gallery />} />
-
-        <Route path="/postpage" element={<PostPage />} >
-            <Route path=":id" element={<Post />} />
-            <Route path="newpost" element={<NewPost />} />
-        </Route>
-
-      </Routes>
-
+      
+      
+      {/* <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Title" 
+          value={title} 
+          onChange={(e)=>setTitle(e.target.value)} 
+          required 
+        />
+        <textarea 
+          placeholder="Body" 
+          value={body} 
+          onChange={(e)=>setBody(e.target.value)} 
+          required 
+        />
+        <button type="submit">Add Post</button>
+      </form>
+       */}
+       <DataProvider>
+          <Search search={search} setSearch={setSearch}/><hr />
+          <AddPost title={title} setTitle={setTitle} body={body} setBody={setBody} handleSubmit={handleSubmit}/>
+       </DataProvider>
+       
+      <Home searchResults={searchResults} />
     </>
   )
 }

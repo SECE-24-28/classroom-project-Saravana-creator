@@ -1,19 +1,14 @@
-import {createContext,useState} from 'react';
-const DataContext=createContext();
+import React from 'react'
+import {createContext,useState} from "react"
 
+const DataContext = createContext();
 export const DataProvider=({children})=>{
-    const [name,setName]=useState("Sara");
-    const [count,setCount]=useState(100);
-
-    const demo=()=>{
-        return "India";
-    }
-
+    const [num,setNum]=useState(100);
     return(
-        <DataContext.Provider value={{name,setName,count,setCount,demo}}>
-        {children}
-        </DataContext.Provider>
-    );
-};
+        <DataContext.Provider value={{num,setNum}}>
+            {children}
+        </DataContext.Provider> 
+    )
+}
 
-export default DataContext;
+export default DataContext
