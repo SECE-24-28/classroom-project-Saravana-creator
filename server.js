@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 4000;
@@ -7,59 +8,66 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-let courses = require("./data/db.json");
+mongoose.connect("mongodb://localhost:27017/mycourse").then(() => console.log("Connected successfully"))
+.catch(err => console.log("Error:", err));
 
-app.get("/api/courses", (req, res) => {
-    res.json(courses);
-});
+const mycourse = require("./model/CourseModel");
 
-app.get("/api/courses/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const course = courses.find(c => c.cid === id);
-
-    if (!course) {
-        return res.status(404).json({ msg: "Course not found" });
+app.get("/api/courses"
+    , async (req, res) => {
+    try {
+        const courses = await mycourse.find();
+        res.json(courses);
+    } catch (err) {
+        res.status(500).json({ msg: err.message });
     }
-
-    res.json(course);
 });
 
-app.post("/api/courses", (req, res) => {
-    const { cname, cdur } = req.body;
+app.post("/api/courses", async (req, res) => {
+    try {
+        const {title,duration} = req.body;
+        const course = new mycourse({title,duration});
+        await course.save();
+        res.status(201).json(course);
 
-    const cid = courses.length
-        ? courses[courses.length - 1].cid + 1
-        : 1;
-
-    const newCourse = { cid, cname, cdur };
-    courses.push(newCourse);
-
-    res.status(201).json(newCourse);
-});
-
-app.put("/api/courses/:id", (req, res) => {
-    const id = Number(req.params.id);
-    const { cname, cdur } = req.body;
-
-    const course = courses.find(c => c.cid === id);
-
-    if (!course) {
-        return res.status(404).json({ msg: "Course not found" });
+    } catch (err) {
+        res.status(500).json({ msg: err.message });
     }
-
-    course.cname = cname;
-    course.cdur = cdur;
-
-    res.status(200).json(course);
 });
 
-app.delete("/api/courses/:id", (req, res) => {
-    const id = Number(req.params.id);
-    courses = courses.filter(c => c.cid !== id);
+app.put("/api/courses/:id", async (req, res) => {
+    try {
+        const updatedCourse = await mycourse.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
 
-    res.json({ msg: "Course deleted" });
+        if (!updatedCourse) {
+            return res.status(404).json({ msg: "Course Not Found" });
+        }
+        res.json(updatedCourse);
+    } catch (err) {
+        res.status(500).json({ msg: err.message });
+    }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.delete("/api/courses/:id", async (req, res) => {
+    try {
+        const course = await mycourse.findByIdAndDelete(req.params.id);
+
+        if (!course) {
+            return res.status(404).json({ msg: "Course Not Found" });
+        }
+
+        res.json({ msg: "Course Deleted" });
+
+    } catch (err) {
+        res.status(500).json({ msg: err.message });
+    }
 });
+
+
+app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}`)
+);
